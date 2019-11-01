@@ -1,0 +1,20 @@
+/**app.wxss**/
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.nf{
+    float: none;
+}
+.clearfix{
+  overflow: auto;
+}
+.clearfix:after{
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    clear: both;
+}
