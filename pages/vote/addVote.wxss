@@ -1,0 +1,91 @@
+/**index.wxss**/
+.form-box{
+  width: 100%;
+  font-size: 28rpx;
+}
+.form-box .logo{
+  display: block;
+  margin: auto;
+  width: 150rpx;
+  height: 150rpx;
+}
+.form-box .form-item{
+  margin: 28rpx;
+}
+.form-item .label{
+  margin: 0 28rpx 0 0;
+  width: 120rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  text-align: right;
+}
+.form-item .text{
+  padding: 14rpx;
+  line-height: 40rpx;
+  border-radius: 8rpx;
+  border: solid 1px #ccc;
+  overflow: hidden;
+}
+.form-item textarea{
+  width: auto;
+  height: 120rpx;
+}
+.form-item button{
+  padding: 10rpx 0;
+  width: 200rpx;
+  font-size: 28rpx;
+  background: #1296db;
+  color: #ffffff;
+}
+.form-item .icon{
+  margin: 9rpx 0 9rpx 28rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+
+/* 选择限制 */
+.form-item .chose-type-box{
+  overflow: hidden;
+}
+.chose-type-box .chose-picker{
+  display: inline-block;
+}
+.chose-type-box input{
+  display: inline-block;
+  padding: 14rpx;
+  width: 160rpx;
+  line-height: 40rpx;
+  border-radius: 8rpx;
+  border: solid 1px #ccc;
+}
+.chose-type-box span{
+  display: inline-block;
+  margin: 0 14rpx;
+  line-height: 68rpx;
+  vertical-align: top;
+}
+
+/* 选择项 */
+.form-item .chose-box{
+  overflow: hidden;
+}
+.form-item .chose-box input{
+  margin-bottom: 14rpx;
+}
+
+/* 时间 */
+.form-item .time-box{
+  overflow: hidden;
+}
+.time-box .time-picker{
+  display: inline-block;
+  width: 46%;
+}
+.time-box span{
+  display: inline-block;
+  width: 8%;
+  height: 68rpx;
+  line-height: 68rpx;
+  text-align: center;
+  vertical-align: top;
+}

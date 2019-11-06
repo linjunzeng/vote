@@ -2,5 +2,6 @@
 App({
   onLaunch: function () {
     
-  }
+  },
+  userId: '004'
 })

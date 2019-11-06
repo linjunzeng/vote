@@ -1,52 +1,14 @@
-<!--index.wxml-->
-<form class='form-box'>
-  <view class='form-item clearix'>
-    <label class='label fl'>投票主题</label>
-    <textarea class='text' placeholder='请输入 5 ~ 40字' bindinput="setTitle" value='{{title}}'/>
+<view class='index-box'>
+  <image class='logo' mode='aspectFit' src='../../static/images/logo.png'></image>
+  <view class='welcome'>欢迎使用 投票助手 小程序</view>
+  <view class='tips-text'>使用须知</view>
+  <view class='tips-box'>
+    <view class='tips'>1. 请勿随意发起投票以免引起反感。</view>
+    <view class='tips'>2. 请认真编辑"投票内容"，正确的使用该小程序</view>
+    <view class='tips'>3. 恶意编辑'投票'或者进行转发'刷票'来达到私人目的的账号，将会停止使用该小程序，并且该小程序不负责其投票后果</view>
+    <view class='tips'>4. 请勿使用该小程序进行赌博，情色等违法情景投票</view>
+    <view class='tips'>5. 本小程序在 githun 上开源 (搜索 linjunzeng)，有兴趣一起优化或者有意见反馈可以访问参与</view>
   </view>
-  <view class='form-item clearix'>
-    <label class='label fl'>选择限制</label>
-    <view class='chose-type-box'>
-      <picker class='chose-picker' bindchange='choseTypeChange' range-key='value' value='{{choseTypeIndex}}' range='{{choseTypeArray}}'>
-        <input class='vote-type' disabled value='{{choseTypeArray[choseTypeIndex].value}}' placeholder='请选择条件'/>
-      </picker>
-      <span>选择</span>
-      <input class='vote-type' type='number' placeholder='请输入数字' value='{{choseNumber}}'/>
-      <span>项</span>
-    </view>
-  </view>
-  <view class='form-item clearix' wx:for='{{voteChose}}' wx:key='index'>
-    <image data-index='{{index}}' bindtap='changeChose' src='{{index == 0 ? addImgsrc : delImgsrc}}' class='icon fr'/>
-    <label class='label fl'>{{index == 0 ? '选择项' : ''}}</label>
-    <input class='text' placeholder='请输入 1 ~ 14字' data-index='{{index}}' bindinput="setChose" value='{{item}}'/>
-  </view>
-  <view class='form-item clearix'>
-    <label class='label fl'>开始时间</label>
-    <view class='time-box'>
-      <picker class='time-picker' mode='date' data-timetype="timeStartDate" bindchange='changeTime' end="timeEndDate">
-        <input class='text' disabled value='{{timeStartDate}}' placeholder='请选择开始日期'/>
-      </picker>
-      <span>-</span>
-      <picker class='time-picker' mode='time' data-timetype="timeStartTime" bindchange='changeTime' end="timeEndTime">
-        <input class='text' disabled value='{{timeStartTime}}' placeholder='请选择开始时间'/>
-      </picker>
-    </view>
-  </view>
-  <view class='form-item clearix'>
-    <label class='label fl'>结束时间</label>
-    <view class='time-box'>
-        <picker class='time-picker' mode='date' data-timetype="timeEndDate" bindchange='changeTime' start="{{timeStartDate}}">
-        <input class='text' disabled value='{{timeEndDate}}' placeholder='请选择结束时间'/>
-        </picker>
-        <span>-</span>
-        <picker class='time-picker' mode='time' data-timetype="timeEndTime" bindchange='changeTime' start="{{timeStartTime}}">
-          <input class='text' disabled value='{{timeEndTime}}' placeholder='请选择结束时间'/>
-        </picker>
-    </view>
-    
-  </view>
-  <view class='form-item clearix'>
-    <label class='label fl'></label>
-    <button bindtap='submit' type='default' size='mini'>确认</button>
-  </view>
-</form>
+  
+  <button class='vote-btn' type="default" bindtap='goVote'>发起投票</button>
+</view>

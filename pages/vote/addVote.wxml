@@ -1,0 +1,63 @@
+<!--index.wxml-->
+<form class='form-box'>
+  <image class='logo' mode='aspectFit' src='../../static/images/logo.png'></image>
+  <!-- 投票主题 -->
+  <view class='form-item clearix'>
+    <label class='label fl'>投票主题</label>
+    <textarea class='text' placeholder='请输入投票主题(最多40字)' value='{{title}}' data-key="title" bindinput="setValue"/>
+  </view>
+
+  <!-- 选择限制 -->
+  <view class='form-item clearix'>
+    <label class='label fl'>选择限制</label>
+    <view class='chose-type-box'>
+      <picker class='chose-picker' data-key="choseTypeIndex" bindchange='setValue' range-key='value' value='{{choseTypeIndex}}' range='{{choseTypeArray}}'>
+        <input class='vote-type' disabled value='{{choseTypeArray[choseTypeIndex].value}}' placeholder='请选择条件'/>
+      </picker>
+      <span>选择</span>
+      <input class='vote-type' type='number' placeholder='请输入数字' value='{{choseNumber}}' data-key="choseNumber" bindinput="setValue"/>
+      <span>项</span>
+    </view>
+  </view>
+
+  <!-- 选择项 -->
+  <view class='form-item clearix' wx:for='{{voteChose}}' wx:key='index'>
+    <image data-index='{{index}}' bindtap='changeChose' src='{{index == 0 ? "../../static/images/icon-add.png" : "../../static/images/icon-del.png"}}' class='icon fr'/>
+    <label class='label fl'>{{index == 0 ? '选择项' : ''}}</label>
+    <input class='text' placeholder='请输入选择项(最多14字)' data-key="voteChose[{{index}}].choseText" bindinput="setValue" value='{{item.choseText}}'/>
+  </view>
+
+  <!-- 开始时间 -->
+  <view class='form-item clearix'>
+    <label class='label fl'>开始时间</label>
+    <view class='time-box'>
+      <picker class='time-picker' mode='date' end="timeEndDate" data-key="timeStartDate" bindchange="setValue">
+        <input class='text' disabled value='{{timeStartDate}}' placeholder='请选择开始日期'/>
+      </picker>
+      <span>-</span>
+      <picker class='time-picker' mode='time' end="timeEndTime" data-key="timeStartTime" bindchange="setValue">
+        <input class='text' disabled value='{{timeStartTime}}' placeholder='请选择开始时间'/>
+      </picker>
+    </view>
+  </view>
+
+  <!-- 结束时间 -->
+  <view class='form-item clearix'>
+    <label class='label fl'>结束时间</label>
+    <view class='time-box'>
+        <picker class='time-picker' mode='date' start="{{timeStartDate}}" data-key="timeEndDate" bindchange="setValue">
+        <input class='text' disabled value='{{timeEndDate}}' placeholder='请选择结束时间'/>
+        </picker>
+        <span>-</span>
+        <picker class='time-picker' mode='time' start="{{timeStartTime}}" data-key="timeEndTime" bindchange="setValue">
+          <input class='text' disabled value='{{timeEndTime}}' placeholder='请选择结束时间'/>
+        </picker>
+    </view>
+  </view>
+
+  <!-- 确认 -->
+  <view class='form-item clearix'>
+    <label class='label fl'></label>
+    <button bindtap='submit' type='default' size='mini'>确认</button>
+  </view>
+</form>

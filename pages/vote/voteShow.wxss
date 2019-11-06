@@ -1,0 +1,66 @@
+/* pages/vote/voteShow.wxss */
+.show-box{
+  padding: 28rpx;
+}
+.show-box .title{
+  margin: 28rpx 0 0;
+  line-height: 50rpx;
+  font-size: 32rpx;
+  text-indent: 40rpx;
+  background: no-repeat 0 10rpx;
+  background-size: 30rpx 30rpx;
+}
+.show-box .tips{
+  margin: 28rpx 0 0;
+  line-height: 48rpx;
+  font-size: 28rpx;
+  color: #ccc;
+}
+/* 选项 */
+.show-box .list-box{
+  margin: 28rpx 0 0;
+}
+.list-box .item{
+  padding: 8rpx 0;
+  line-height: 48rpx;
+}
+.list-box .item .text{
+  padding: 0 8rpx;
+  color: #1296db;
+}
+.list-box .item .count{
+  padding: 0 8rpx;
+  color: #f00;
+}
+.list-box .item .color{
+  display: inline-block;
+  margin: 0 10rpx 0 0;
+  width: 20rpx;
+  height: 20rpx;
+}
+.list-box .item .icon{
+  margin: 4rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align:top;
+}
+/* 数据展示 */
+.show-box .table-data {
+  margin: 28rpx 0 0;
+	position: relative;
+}
+.table-data .table{
+  margin: auto;
+  width: 320rpx;
+  height: 320rpx;
+}
+
+/* 按钮 */
+.show-box .btn-box{
+  margin: 100rpx 40rpx 0;
+}
+.show-box .btn-box .vote-btn{
+  margin: 0 0 30rpx;
+  background: #1296db;
+  color: #fff;
+}

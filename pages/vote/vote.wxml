@@ -1,0 +1,18 @@
+<!--pages/vote/vote.wxml-->
+<view class='vote-box' wx:if="{{isLoad}}">
+  <view>
+    <image class='logo' mode='aspectFit' src='../../static/images/logo.png'></image>
+    <view class='title' style='background-image: url(../../static/images/icon-question.png)'>{{voteData.title}}</view>
+    <view class='chose-box'>
+      <view 
+      class='{{item.active ? "item active" : "item"}}'
+      wx:for="{{voteData.voteChose}}" 
+      wx:key="{{index}}"
+      data-index="{{index}}"
+      bindtap='checkChose'>{{item.choseText}}</view>
+    </view>
+    <view class='tips'>*{{choseTypeObj[voteData.choseType]}}选择{{voteData.choseNumber}}个选项</view>
+    <button wx:if="{{voteData.status == 1}}" class='{{isRead ? "vote-btn active" : "vote-btn"}}' type="default" loading="{{loading}}" bindtap="submit" >投票</button>
+    <button wx:if="{{voteData.status == 2}}" class='vote-btn' type="default">投票未开始</button>
+  </view>
+</view>

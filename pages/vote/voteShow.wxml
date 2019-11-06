@@ -1,0 +1,24 @@
+<!--pages/vote/voteShow.wxml-->
+<view class='show-box' wx:if="isLoad">
+  <!-- 标题 -->
+  <view class='title' style='background-image: url(../../static/images/icon-question.png)'>{{voteData.title}}</view>
+  <!-- 圆饼图 -->
+  <view class='table-data'>
+	  <canvas class='table' canvas-id="Canvas"></canvas>
+  </view>
+  <!-- 选择项 -->
+  <view class='list-box'>
+    <view wx:for="{{voteData.voteChose}}" wx:key="{{index}}" class='item'>
+      <span class="color" style="background: {{item.color}}"></span>{{item.percen}}% 选择了<text class='text'>{{item.choseText}}</text>共<text class='count'>{{item.count}}</text>票 <image class='icon' wx:if="{{item.active}}" src='../../static/images/icon-check.png'></image>
+    </view>
+  </view>
+  <!-- tips -->
+  <view class='tips'>
+    <view>投票限制：{{choseTypeObj[voteData.choseType]}}选择{{voteData.choseNumber}}个选项</view>
+    <view>投票状态：{{voteData.statusText}}</view>
+  </view>
+  <view class='btn-box'>
+    <button class='vote-btn' type="default" open-type="share" wx:if="{{voteData.status == 1}}">邀请别人投票</button>
+    <button class='vote-btn' type="default" bindtap='goVote'>我也去发起投票</button>
+  </view>
+</view>
