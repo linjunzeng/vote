@@ -1,3 +1,5 @@
+import { getVote, addVote } from '../../utils/api.js'
+let app = getApp();
 Page({
   data: {
     // 参数
@@ -32,10 +34,11 @@ Page({
         choseText: ''
       }
     ],
-    delVoteChose: []
+    delVoteChose: [],
+    userId: app.userId
   },
   onLoad: function (options) {
-    let tid = options.tid;
+    let tid = options.tid || 48;
     if(tid){
       wx.setNavigationBarTitle({
         title: '编辑主题'
@@ -44,63 +47,47 @@ Page({
         title: '获取数据中',
       })
       
-      wx.request({
-        url: 'http://localhost:3000/getVote',
-        method: 'POST',
-        data: { tid },
-        success: res => {
-          if (res.data.errorCode == '00') {
-            let data = res.data.returnObject,
-                choseTypeArray = this.data.choseTypeArray,
-                choseTypeIndex = 2;
+      getVote(this.data.userId, tid)
+      .then(res => {
+        let data = res.returnObject,
+            choseTypeArray = this.data.choseTypeArray,
+            choseTypeIndex = 2;
 
-            if (data.status == 3 || data.status == 4){
-              wx.showToast({
-                title: data.statusText,
-                icon: 'none',
-                duration: 2000
-              })
-              setTimeout(() => {
-                wx.switchTab({
-                  url: '/pages/index/index'
-                })
-              }, 2000)
-              return false;
-            }
-
-            for (let i in choseTypeArray){
-              if (choseTypeArray[i].key == data.choseType){
-                choseTypeIndex = i;
-              }
-            }
-
-            this.setData({
-              tid,
-              choseTypeIndex,
-              title: data.title,
-              choseNumber: data.choseNumber,
-              title: data.title,
-              timeStartDate: data.timeStart.substr(0, 10),
-              timeStartTime: data.timeStart.substr(11, 5),
-              timeEndDate: data.timeEnd.substr(0, 10),
-              timeEndTime: data.timeEnd.substr(11, 5),
-              voteChose: data.voteChose
+        if (data.status == 3 || data.status == 4) {
+          app.showToast(data.statusText, () => {
+            wx.switchTab({
+              url: '/pages/index/index'
             })
-            wx.hideLoading();
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
-            })
-            setTimeout(() => {
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
-            }, 2000)
+          })
+        }else{
+          // 限制条件
+          for (let i in choseTypeArray) {
+            if (choseTypeArray[i].key == data.choseType) {
+              choseTypeIndex = i;
+            }
           }
+
+          this.setData({
+            tid,
+            choseTypeIndex,
+            title: data.title,
+            choseNumber: data.choseNumber,
+            title: data.title,
+            timeStartDate: data.timeStart.substr(0, 10),
+            timeStartTime: data.timeStart.substr(11, 5),
+            timeEndDate: data.timeEnd.substr(0, 10),
+            timeEndTime: data.timeEnd.substr(11, 5),
+            voteChose: data.voteChose
+          })
+          wx.hideLoading();
         }
-      })
+      }).catch(err => {
+        app.showToast(err.message, () => {
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
+        })
+      });
     }
    
   },
@@ -159,7 +146,7 @@ Page({
         { type: 'isNull', msg: '请输入结束时间' }
       ]
     },
-      msg = '';
+    msg = '';
 
     for (let i in verification) {
       if (msg) {
@@ -200,6 +187,7 @@ Page({
 
     // 发送数据成功跳转
     let postData = {
+      userId: this.data.userId,
       tid: this.data.tid,
       title: this.data.title,
       choseNumber: this.data.choseNumber,
@@ -210,25 +198,15 @@ Page({
       delVoteChose: this.data.delVoteChose
     }
     
-    wx.request({
-      url: 'http://localhost:3000/addVote',
-      method: 'POST',
-      data: postData,
-      success(res) {
-        if (res.data.errorCode == '00') {
-          wx.showToast({
-            title: '添加成功',
-            icon: 'success',
-            duration: 2000,
-            success() {
-              wx.redirectTo({
-                url: '/pages/vote/vote?tid=' + res.data.returnObject.tid
-              })
-            }
-          })
-        }
-      }
+    addVote(postData)
+    .then(res =>{
+      app.showToast(res.message, () => {
+        wx.redirectTo({
+          url: '/pages/vote/vote?tid=' + res.returnObject.tid
+        })
+      }, 'success')
+    }).catch(err => {
+      app.showToast(err.message)
     })
-    
   }
 })

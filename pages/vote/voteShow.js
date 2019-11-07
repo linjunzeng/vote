@@ -1,3 +1,4 @@
+import { getVote } from '../../utils/api.js'
 let app = getApp();
 Page({
   data: {
@@ -12,72 +13,53 @@ Page({
     }
   },
   onLoad: function (options) {
-    let tid = options.tid || 47;
+    let tid = options.tid;
     if (tid) {
       wx.showLoading({
         title: '获取数据中',
       })
-      wx.request({
-        url: 'http://localhost:3000/getVote',
-        method: 'POST',
-        data: {
-          tid,
-          userId: this.data.userId,
-          isAll: true
-        },
-        success: res => {
-          if (res.data.errorCode == '00') {
-            let data = res.data.returnObject,
-                // 圆饼图颜色数组
-                colorArr = ['#4db2e6', '#fedb3f', '#64b85e', '#b268a7', '#bcbcbc', '#8087c1', '#964e1b', '#1b5d96', '#c317a6', '#806312'],
-                // 总投票数
-                allCount = 0;
-            // 统计票数
-            for (let i in data.voteChose){
-              allCount += data.voteChose[i].count;
-            }
-            // 计算百分比，设置颜色，标识选择
-            for (let i in data.voteChose) {
-              data.voteChose[i].color = colorArr[i];
-              data.voteChose[i].percen = (data.voteChose[i].count * 100 / allCount).toFixed(2);
-              if (data.result.indexOf(data.voteChose[i].id) > -1){
-                data.voteChose[i].active = true;
-              }
-            }
+      getVote(this.data.userId, tid, true)
+      .then(res => {
+        let data = res.returnObject,
+          // 圆饼图颜色数组
+          colorArr = ['#4db2e6', '#fedb3f', '#64b85e', '#b268a7', '#bcbcbc', '#8087c1', '#964e1b', '#1b5d96', '#c317a6', '#806312'],
+          // 总投票数
+          allCount = 0;
 
-            this.setData({
-              tid,
-              voteData: data,
-              isLoad: true
-            })
-            // 生成圆饼图
-            this.creteTable();
-            wx.hideLoading();
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
-            })
-            setTimeout(() => {
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
-            }, 2000)
+        // 统计票数
+        for (let i in data.voteChose) {
+          allCount += data.voteChose[i].count;
+        }
+        // 计算百分比，设置颜色，标识选择
+        for (let i in data.voteChose) {
+          data.voteChose[i].color = colorArr[i];
+          data.voteChose[i].percen = (data.voteChose[i].count * 100 / allCount).toFixed(2);
+          if (data.result.indexOf(data.voteChose[i].id) > -1) {
+            data.voteChose[i].active = true;
           }
         }
+
+        this.setData({
+          tid,
+          voteData: data,
+          isLoad: true
+        })
+        // 生成圆饼图
+        this.creteTable();
+        wx.hideLoading();
+      }).catch(err =>{
+        app.showToast(err.message, () => {
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
+        })
       })
     } else {
-      wx.showToast({
-        title: '投票不存在',
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(() => {
+      app.showToast('投票不存在', () => {
         wx.switchTab({
           url: '/pages/index/index'
         })
-      }, 2000)
+      })
     }
   },
   creteTable: function () {

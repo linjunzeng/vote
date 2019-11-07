@@ -1,7 +1,8 @@
 // pages/vote/vote.js
+import { getVote, joinVote } from '../../utils/api.js'
+
 let app = getApp();
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -23,71 +24,47 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let tid = options.tid || 47;
+    let tid = options.tid;
     if (tid) {
       wx.showLoading({
         title: '获取数据中',
       })
+      
+      getVote(this.data.userId, tid)
+      .then(res =>{
+        let data = res.returnObject;
 
-      wx.request({
-        url: 'http://localhost:3000/getVote',
-        method: 'POST',
-        data: { 
-          tid,
-          userId: this.data.userId
-        },
-        success: res => {
-          if (res.data.errorCode == '00') {
-            let data = res.data.returnObject;
-
-            if ((data.status == 1 && data.result.length == 0) || data.status == 2){
-              this.setData({
-                tid,
-                voteData: data,
-                isLoad: true
-              })
-            } else if (data.status == 4){
-              wx.showToast({
-                title: data.statusText,
-                icon: 'none',
-                duration: 2000
-              })
-              setTimeout(() => {
-                wx.switchTab({
-                  url: '/pages/index/index'
-                })
-              }, 2000)
-            }else{
-              wx.redirectTo({
-                url: '/pages/vote/voteShow?tid=' + tid
-              })
-            }
-            wx.hideLoading();
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
+        if ((data.status == 1 && data.result.length == 0) || data.status == 2) {
+          this.setData({
+            tid,
+            voteData: data,
+            isLoad: true
+          })
+        } else if (data.status == 4) {
+          app.showToast(data.statusText, () => {
+            wx.switchTab({
+              url: '/pages/index/index'
             })
-            setTimeout(() => {
-              wx.switchTab({
-                url: '/pages/index/index'
-              })
-            }, 2000)
-          }
+          })
+        } else {
+          wx.redirectTo({
+            url: '/pages/vote/voteShow?tid=' + tid
+          })
         }
+        wx.hideLoading();
+      }).catch(err =>{
+        app.showToast(err.message, () => {
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
+        })
       })
     }else{
-      wx.showToast({
-        title: '投票不存在',
-        icon: 'none',
-        duration: 2000
-      })
-      setTimeout(() => {
+      app.showToast('投票不存在', () => {
         wx.switchTab({
           url: '/pages/index/index'
         })
-      }, 2000)
+      })
     }
   },
   // 选择选项
@@ -140,31 +117,22 @@ Page({
           checkArr.push(item.id)
         }
       })
-      wx.request({
-        url: 'http://localhost:3000/joinVote',
-        method: 'POST',
-        data: {
-          checkArr,
-          tid: this.data.tid,
-          userId: this.data.userId
-        },
-        success: res => {
-          if (res.data.errorCode == '00') {
-            wx.redirectTo({
-              url: '/pages/vote/voteShow?tid=' + this.data.tid
-            })
-            wx.hideLoading();
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
-            })
-          }
-          this.setData({
-            loading: false
-          })
-        }
+
+      joinVote(this.data.userId, this.data.tid, checkArr)
+      .then(res => {
+        wx.redirectTo({
+          url: '/pages/vote/voteShow?tid=' + this.data.tid
+        })
+        wx.hideLoading();
+      }).catch(err => {
+        wx.showToast({
+          title: res.data.message,
+          icon: 'none',
+          duration: 2000
+        })
+        this.setData({
+          loading: false
+        })
       })
     }
   },

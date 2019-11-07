@@ -6,6 +6,9 @@ Page({
       url: '/pages/vote/addVote'
     })
   },
+  onGotUserInfo(res){
+    console.log(res)
+  },
   /**
    * 用户点击右上角分享
    */
