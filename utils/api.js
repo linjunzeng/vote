@@ -1,7 +1,7 @@
-let baseUrl = 'http://localhost:3000';
-// let baseUrl = 'https://www.linjunzeng.top';
+// let baseUrl = 'http://localhost:3000';
+let baseUrl = 'https://www.linjunzeng.top';
 
-function post(url, data = null) {
+function post(url, data = {}) {
   return new Promise((resolve, reject) => {
     wx.request({
       url: url,
@@ -78,9 +78,9 @@ export function getUserVote(userId) {
 
 /**
  * 获取用户投票列表
- * @param userId 用户id
+ * @param code 登录code
  * @returns {Promise}
  */
-export function login() {
-  return post(baseUrl + '/login', {aa: 123});
+export function login(code) {
+  return post(baseUrl + '/login', {code});
 }

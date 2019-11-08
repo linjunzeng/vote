@@ -17,20 +17,19 @@ Page({
     voteData: null,
     isRead: false,
     loading: false,
-    isLoad: false,
-    userId: app.userId
+    isLoad: false
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let tid = options.tid;
+    let tid = options.tid || 48;
     if (tid) {
       wx.showLoading({
         title: '获取数据中',
       })
       
-      getVote(this.data.userId, tid)
+      getVote(app.userId, tid)
       .then(res =>{
         let data = res.returnObject;
 
@@ -118,7 +117,7 @@ Page({
         }
       })
 
-      joinVote(this.data.userId, this.data.tid, checkArr)
+      joinVote(app.userId, this.data.tid, checkArr)
       .then(res => {
         wx.redirectTo({
           url: '/pages/vote/voteShow?tid=' + this.data.tid

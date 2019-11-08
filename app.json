@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/vote/voteShow",
     "pages/my/my",
+    "pages/vote/addVote",
+    "pages/index/index",
     "pages/vote/vote",
-    "pages/vote/addVote"
+    "pages/vote/voteShow"
   ],
   "tabBar": {
     "list": [

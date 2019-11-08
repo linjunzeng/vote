@@ -2,20 +2,29 @@
 import { login } from './utils/api.js'
 App({
   onLaunch: function () {
-    login();
-    /* wx.checkSession({
+    wx.getStorage({
+      key: 'userId',
       success: res => {
-        this.getInfo()
+        this.userId = res.data;
       },
       fail: err => {
         this.login()
       }
-    }) */
+    })
   },
   login(){
     wx.login({
-      success(res) {
-        console.log(res);
+      success: res => {
+        login(res.code)
+        .then(data => {
+          let userId = data.returnObject.userId;
+          
+          this.userId = userId;
+          wx.setStorageSync('userId', userId)
+        })
+        .catch(err => {
+          this.showToast(err.message)
+        });
       }
     })
   },
@@ -26,7 +35,7 @@ App({
       }
     })
   },
-  userId: '005',
+  userId: '',
   showToast: function (title = '', complete = null, icon = 'none'){
     wx.showToast({
       title,

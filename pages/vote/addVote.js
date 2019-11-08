@@ -34,11 +34,10 @@ Page({
         choseText: ''
       }
     ],
-    delVoteChose: [],
-    userId: app.userId
+    delVoteChose: []
   },
   onLoad: function (options) {
-    let tid = options.tid || 48;
+    let tid = options.tid;
     if(tid){
       wx.setNavigationBarTitle({
         title: '编辑主题'
@@ -46,8 +45,7 @@ Page({
       wx.showLoading({
         title: '获取数据中',
       })
-      
-      getVote(this.data.userId, tid)
+      getVote(app.userId, tid)
       .then(res => {
         let data = res.returnObject,
             choseTypeArray = this.data.choseTypeArray,
@@ -187,7 +185,7 @@ Page({
 
     // 发送数据成功跳转
     let postData = {
-      userId: this.data.userId,
+      userId: app.userId,
       tid: this.data.tid,
       title: this.data.title,
       choseNumber: this.data.choseNumber,

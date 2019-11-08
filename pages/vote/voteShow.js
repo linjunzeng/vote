@@ -3,7 +3,6 @@ let app = getApp();
 Page({
   data: {
     tid: '',
-    userId: app.userId,
     voteData: null,
     isLoad: false,
     choseTypeObj: {
@@ -18,7 +17,7 @@ Page({
       wx.showLoading({
         title: '获取数据中',
       })
-      getVote(this.data.userId, tid, true)
+      getVote(app.userId, tid, true)
       .then(res => {
         let data = res.returnObject,
           // 圆饼图颜色数组
