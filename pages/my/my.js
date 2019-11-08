@@ -8,6 +8,7 @@ Page({
     .then(res => {
       console.log(res)
     }).catch(err =>{
+      console.log(err)
       app.showToast(err.message)
     })
   }

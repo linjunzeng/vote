@@ -1,31 +1,31 @@
 //app.js
 import { login } from './utils/api.js'
 App({
-  onLaunch: function () {
-    wx.getStorage({
-      key: 'userId',
-      success: res => {
-        this.userId = res.data;
-      },
-      fail: err => {
-        this.login()
-      }
-    })
+  onLaunch: async function () {
+    let userId = wx.getStorageSync('userId');
+
+    if (!userId){
+      userId = await this.login();
+    }
+    this.userId = userId;
   },
   login(){
-    wx.login({
-      success: res => {
-        login(res.code)
-        .then(data => {
-          let userId = data.returnObject.userId;
-          
-          this.userId = userId;
-          wx.setStorageSync('userId', userId)
-        })
-        .catch(err => {
-          this.showToast(err.message)
-        });
-      }
+    return new Promise((resolve, reject) => {
+      wx.login({
+        success: res => {
+          login(res.code)
+            .then(data => {
+              let userId = data.returnObject.userId;
+
+              wx.setStorageSync('userId', userId)
+              resolve(userId)
+            })
+            .catch(err => {
+              this.showToast(err.message)
+              reject(err)
+            });
+        }
+      })
     })
   },
   getInfo(){
