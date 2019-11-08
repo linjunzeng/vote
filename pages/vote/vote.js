@@ -23,7 +23,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let tid = options.tid || 48;
+    let tid = options.tid;
     if (tid) {
       wx.showLoading({
         title: '获取数据中',

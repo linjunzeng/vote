@@ -5,5 +5,10 @@ Page({
   },
   onLoad: function (options) {
     getUserVote(app.userId)
+    .then(res => {
+      console.log(res)
+    }).catch(err =>{
+      app.showToast(err.message)
+    })
   }
 })
