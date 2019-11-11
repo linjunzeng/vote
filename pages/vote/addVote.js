@@ -45,7 +45,7 @@ Page({
       wx.showLoading({
         title: '获取数据中',
       })
-      getVote(app.userId, tid)
+      getVote(tid)
       .then(res => {
         let data = res.returnObject,
             choseTypeArray = this.data.choseTypeArray,
@@ -185,7 +185,6 @@ Page({
 
     // 发送数据成功跳转
     let postData = {
-      userId: app.userId,
       tid: this.data.tid,
       title: this.data.title,
       choseNumber: this.data.choseNumber,

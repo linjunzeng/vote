@@ -1,19 +1,47 @@
-const formatTime = date => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+import { login } from './api.js';
 
-  return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+
+
+
+export function getToken(){
+  return new Promise((resolve, reject) => {
+    wx.checkSession({
+      success: async res => {
+        let token = wx.getStorageSync('token');
+        resolve(token || await wxlogin())
+      },
+      fail: async err => {
+        resolve(await wxlogin())
+      }
+    })
+  })
 }
 
-const formatNumber = n => {
-  n = n.toString()
-  return n[1] ? n : '0' + n
+export function wxlogin(){
+  return new Promise((resolve, reject) => {
+    wx.login({
+      success: res => {
+        login(res.code)
+        .then((data) => {
+          let token = data.returnObject.token;
+
+          wx.setStorageSync('token', token)
+          resolve(token)
+        })
+        .catch(err => {
+          showToast(err.message)
+          reject(err)
+        });
+      }
+    })
+  })
 }
 
-module.exports = {
-  formatTime: formatTime
+export function showToast(title = '', complete = null, icon = 'none') {
+  wx.showToast({
+    title,
+    icon,
+    duration: 2000
+  })
+  complete && setTimeout(complete, 2000)
 }

@@ -17,7 +17,7 @@ Page({
       wx.showLoading({
         title: '获取数据中',
       })
-      getVote(app.userId, tid, true)
+      getVote(tid, true)
       .then(res => {
         let data = res.returnObject,
           // 圆饼图颜色数组
