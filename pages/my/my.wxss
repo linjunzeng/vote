@@ -1,1 +1,47 @@
 /* pages/my/my.wxss */
+.tab-list{
+  display: flex;
+  border-bottom: 1px solid #e7e7e7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 98;
+}
+.tab-list > view{
+  flex:1;
+  text-align: center;
+  line-height: 68rpx;
+}
+.data-container{
+  margin-top: 88rpx;
+}
+.item{
+  width: 90%;
+  border: 1px solid #e7e7e7;
+  border-radius: 8rpx;
+  margin: 20rpx auto;
+  padding: 0 20rpx;
+}
+.item .title{
+  line-height: 68rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 1px solid #e7e7e7;
+}
+.item .msg{
+  display: flex;
+}
+.item .msg .time{
+  flex: 1;
+  font-size: 26rpx;
+  line-height: 60rpx;
+}
+.item-img{
+  width: 100rpx;
+  padding-top: 15rpx;
+}
+.item-img image{
+  width:100rpx;
+  height: 80rpx;
+}

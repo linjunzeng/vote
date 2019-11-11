@@ -1,2 +1,27 @@
-<!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class="container">
+  <view class="tab-list">
+    <view wx:for="{{title}}" bindtap="tab" data-id="{{item.returnObject}}">
+      <text>{{item.title}}</text>
+    </view>
+  </view>
+  <view class="data-container">
+    <block wx:for="{{showdata}}">
+      <view class="item" bindtap="towhere" data-id="{{item.id}}">
+        <view class="title">
+          <text>{{item.title}}</text>
+        </view>
+        <view class="msg">
+          <view class="time">
+            <view><text>开始时间：{{item.timeStart}}</text></view>
+            <view><text>结束时间：{{item.timeEnd}}</text></view>
+          </view>
+          <view class="item-img">
+            <image wx:if="{{item.statusText == '投票已结束'}}" src="../../static/images/ended.png"></image>
+            <image wx:else src="../../static/images/ongoing.png"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+  
+  </view>
+</view>
