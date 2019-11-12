@@ -29,7 +29,7 @@ Page({
         title: '获取数据中',
       })
       
-      getVote(app.userId, tid)
+      getVote(tid)
       .then(res =>{
         let data = res.returnObject;
 
@@ -117,7 +117,7 @@ Page({
         }
       })
 
-      joinVote(app.userId, this.data.tid, checkArr)
+      joinVote(this.data.tid, checkArr)
       .then(res => {
         wx.redirectTo({
           url: '/pages/vote/voteShow?tid=' + this.data.tid

@@ -1,5 +1,4 @@
 import { getUserVote } from '../../utils/api.js'
-let app = getApp();
 Page({
   data: {
     title:[
@@ -16,7 +15,7 @@ Page({
     returnObject:{}
   },
   onLoad: function (options) {
-    getUserVote(app.userId)
+    getUserVote()
     .then(res => {
       console.log(res)
       this.setData({
@@ -24,6 +23,7 @@ Page({
         showdata: res.returnObject.createVote
       })
     }).catch(err =>{
+      console.log(err)
       app.showToast(err.message)
     })
     
