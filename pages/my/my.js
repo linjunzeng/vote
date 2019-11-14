@@ -1,43 +1,37 @@
 import { getUserVote } from '../../utils/api.js'
 Page({
   data: {
-    title:[
-      {
-        'title':'我发起的',
-        'returnObject':'createVote'
-      },
-      {
-        'title': '我参与的',
-        'returnObject': 'joinVote'
-      }
-    ],
-    showdata:[],
-    returnObject:{}
+    key: 'createVote',
+    dataObj: null
   },
-  onLoad: function (options) {
+  onShow: function (options) {
     getUserVote()
     .then(res => {
-      console.log(res)
       this.setData({
-        returnObject: res.returnObject,
-        showdata: res.returnObject.createVote
+        dataObj: res.returnObject
       })
     }).catch(err =>{
-      console.log(err)
       app.showToast(err.message)
     })
-    
   },
-  towhere: function (event) {
-    let _id = event.currentTarget.dataset.id;
-    wx.navigateTo({
-      url: '/pages/vote/voteShow?tid=' + _id
+  // 切换导航
+  changeKey: function(e){
+    this.setData({
+      key: e.currentTarget.dataset.key
     })
   },
-  tab: function (event){
-    let kaa = event.currentTarget.dataset.id;
-    this.setData({
-      showdata: this.data.returnObject[kaa]
+  // 跳转
+  voteDetail: function (e) {
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/vote/voteShow?tid=' + id
+    })
+  },
+  // 编辑
+  voteEdit: function(e){
+    let id = e.currentTarget.dataset.id;
+    wx.navigateTo({
+      url: '/pages/vote/addVote?tid=' + id
     })
   }
 })

@@ -1,27 +1,17 @@
-<view class="container">
-  <view class="tab-list">
-    <view wx:for="{{title}}" wx:key="{{index}}" bindtap="tab" data-id="{{item.returnObject}}">
-      <text>{{item.title}}</text>
-    </view>
+<view class='user-box' wx:if='{{dataObj}}'>
+  <view class='tab-box'>
+    <view class='{{key == "createVote" ? "tab active" : "tab"}}' data-key='createVote' bindtap='changeKey'>发起投票</view>
+    <view class='{{key == "joinVote" ? "tab active" : "tab"}}' data-key='joinVote' bindtap='changeKey'>参与投票</view>
   </view>
-  <view class="data-container">
-    <block wx:for="{{showdata}}" wx:key="{{index}}">
-      <view class="item" bindtap="towhere" data-id="{{item.id}}">
-        <view class="title">
-          <text>{{item.title}}</text>
-        </view>
-        <view class="msg">
-          <view class="time">
-            <view><text>开始时间：{{item.timeStart}}</text></view>
-            <view><text>结束时间：{{item.timeEnd}}</text></view>
-          </view>
-          <view class="item-img">
-            <image wx:if="{{item.statusText == '投票已结束'}}" src="../../static/images/ended.png"></image>
-            <image wx:else src="../../static/images/ongoing.png"></image>
-          </view>
-        </view>
-      </view>
-    </block>
-  
+  <view class='list-box'>
+    <view 
+      wx:for='{{dataObj[key]}}' 
+      wx:key='{{index}}' 
+      class='list'>
+      <view class='btn fr' type='default' size='mini' data-id='{{item.id}}' bindtap='voteDetail'>详情</view>
+      <view wx:if='{{item.status == 1 && key == "createVote"}}' class='btn fr' type='default' size='mini' data-id='{{item.id}}' bindtap='voteEdit'>编辑</view>
+      <view>{{item.title}}</view>
+      <view class='status'>{{item.statusText}}</view>
+    </view>
   </view>
 </view>

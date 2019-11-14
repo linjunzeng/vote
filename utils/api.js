@@ -1,7 +1,7 @@
 import { getToken } from './util.js'
 
-let baseUrl = 'http://localhost:3000';
-// let baseUrl = 'https://www.linjunzeng.top';
+// let baseUrl = 'http://localhost:3000';
+let baseUrl = 'https://www.linjunzeng.top';
 
 function postStatus(res, reject, url, data){
   if (res.statusCode == '401') {

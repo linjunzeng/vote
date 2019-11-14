@@ -1,47 +1,68 @@
-/* pages/my/my.wxss */
-.tab-list{
-  display: flex;
-  border-bottom: 1px solid #e7e7e7;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 98;
+page{
+  width: 100%;
+  height: 100%;
 }
-.tab-list > view{
-  flex:1;
-  text-align: center;
-  line-height: 68rpx;
+.user-box{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
-.data-container{
-  margin-top: 88rpx;
-}
-.item{
-  width: 90%;
-  border: 1px solid #e7e7e7;
-  border-radius: 8rpx;
+/* 导航 */
+.user-box .tab-box{
   margin: 20rpx auto;
-  padding: 0 20rpx;
+  width: 48%;
+  height: 60rpx;
+  border-radius: 12rpx;
+  overflow: hidden;
 }
-.item .title{
-  line-height: 68rpx;
-  font-size: 28rpx;
-  color: #666;
-  border-bottom: 1px solid #e7e7e7;
-}
-.item .msg{
-  display: flex;
-}
-.item .msg .time{
-  flex: 1;
-  font-size: 26rpx;
+.tab-box .tab{
+  display: inline-block;
+  width: 50%;
+  height: 60rpx;
   line-height: 60rpx;
+  font-size: 28rpx;
+  text-align: center;
+  background: #ccc;
+  color: #fff;
 }
-.item-img{
-  width: 100rpx;
-  padding-top: 15rpx;
+.tab-box .tab.active{
+  background: #1296db;
 }
-.item-img image{
-  width:100rpx;
-  height: 80rpx;
+/* 列表 */
+.user-box .list-box{
+  position: absolute;
+  margin: auto;
+  top: 120rpx;
+  bottom: 28rpx;
+  left: 28rpx;
+  right: 28rpx;
+  width: auto;
+  height: auto;
+  overflow: auto;
+}
+
+.list{
+  margin-bottom: 28rpx;
+  padding: 10rpx 28rpx;
+  line-height: 48rpx;
+  border: solid 1px #ccc;
+  border-radius: 8rpx;
+  font-size: 32rpx;
+}
+.list .status{
+  margin-top: 20rpx;
+  font-size: 28rpx;
+}
+.list .btn{
+  margin-top: 30rpx;
+  margin-left: 16rpx;
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 24rpx;
+  background: #1296db;
+  color: #fff;
 }

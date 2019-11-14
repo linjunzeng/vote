@@ -12,7 +12,7 @@ Page({
     }
   },
   onLoad: function (options) {
-    let tid = options.tid;
+    let tid = options.tid || 49;
     if (tid) {
       wx.showLoading({
         title: '获取数据中',
