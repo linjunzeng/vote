@@ -1,11 +1,11 @@
 <view class="container">
   <view class="tab-list">
-    <view wx:for="{{title}}" bindtap="tab" data-id="{{item.returnObject}}">
+    <view wx:for="{{title}}" wx:key="{{index}}" bindtap="tab" data-id="{{item.returnObject}}">
       <text>{{item.title}}</text>
     </view>
   </view>
   <view class="data-container">
-    <block wx:for="{{showdata}}">
+    <block wx:for="{{showdata}}" wx:key="{{index}}">
       <view class="item" bindtap="towhere" data-id="{{item.id}}">
         <view class="title">
           <text>{{item.title}}</text>

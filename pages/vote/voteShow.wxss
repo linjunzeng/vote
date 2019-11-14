@@ -34,9 +34,10 @@
 }
 .list-box .item .color{
   display: inline-block;
-  margin: 0 10rpx 0 0;
+  margin: 14rpx 10rpx 14rpx 0;
   width: 20rpx;
   height: 20rpx;
+  vertical-align: top
 }
 .list-box .item .icon{
   margin: 4rpx;
@@ -51,8 +52,8 @@
 }
 .table-data .table{
   margin: auto;
-  width: 320rpx;
-  height: 320rpx;
+  width: 160px;
+  height: 160px;
 }
 
 /* 按钮 */

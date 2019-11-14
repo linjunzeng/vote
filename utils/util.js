@@ -1,8 +1,5 @@
 import { login } from './api.js';
 
-
-
-
 export function getToken(){
   return new Promise((resolve, reject) => {
     wx.checkSession({

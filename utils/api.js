@@ -3,6 +3,20 @@ import { getToken } from './util.js'
 let baseUrl = 'http://localhost:3000';
 // let baseUrl = 'https://www.linjunzeng.top';
 
+function postStatus(res, reject, url, data){
+  if (res.statusCode == '401') {
+    wx.setStorageSync('token', '')
+    post(url, data)
+  } else if (res.statusCode == '500'){
+    reject({
+      message: '服务器出错'
+    })
+  } else {
+    return true
+  }
+  return false
+}
+
 async function post(url, data = {}) {
   let header = {};
   header.token = url.indexOf('login') < 0 ? await getToken() : '';
@@ -14,6 +28,9 @@ async function post(url, data = {}) {
       data: data,
       header: header,
       success(res) {
+        if (!postStatus(res, reject, url, data)){
+          return false
+        }
         if (res.data.errorCode == '01'){
           reject(res.data)
         }else {
