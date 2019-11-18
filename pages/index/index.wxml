@@ -4,10 +4,11 @@
   <view class='tips-text'>使用须知</view>
   <view class='tips-box'>
     <view class='tips'>1. 请勿随意发起投票以免引起反感。</view>
-    <view class='tips'>2. 请认真编辑"投票内容"，正确的使用该小程序</view>
-    <view class='tips'>3. 恶意编辑'投票'或者进行转发'刷票'来达到私人目的的账号，将会停止使用该小程序，并且该小程序不负责其投票后果</view>
-    <view class='tips'>4. 请勿使用该小程序进行赌博，情色等违法情景投票</view>
-    <view class='tips'>5. 本小程序在 githun 上开源 (搜索 linjunzeng)，有兴趣一起优化或者有意见反馈可以访问参与</view>
+    <view class='tips'>2. 提交投票后将会后台进行审核，通过后才能进行投票</view>
+    <view class='tips'>3. 请认真编辑"投票内容"，正确的使用该小程序</view>
+    <view class='tips'>4. 恶意编辑'投票'或者进行转发'刷票'来达到私人目的的账号，将会停止使用该小程序，并且该小程序不负责其投票后果</view>
+    <view class='tips'>5. 本程序旨在对"计划，决定"进行方便的"统计选择和人数"，请勿使用该小程序进行赌博，情色等违法情景投票</view>
+    <view class='tips'>6. 本小程序在 githun 上开源 (搜索 linjunzeng)，有兴趣一起优化或者有意见反馈可以访问参与</view>
   </view>
   
   <button class='vote-btn' type="default" bindtap='goVote'>发起投票</button>

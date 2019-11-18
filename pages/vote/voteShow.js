@@ -63,51 +63,35 @@ Page({
   },
   creteTable: function () {
     const ctx = wx.createCanvasContext('Canvas');
-    // 设置圆点 x  y   中心点
-    let number = {
-      x: 80,
-      y: 80
-    };
-    // 获取数据 各类项的个数
-    let term = this.data.voteData.voteChose;
-    let termarr = [];
-    for (let t = 0; t < term.length; t++) {
-      // count
-      let thisterm = Number(term[t].count)
-      let thiscolor = term[t].color
-      termarr.push({
-        data: thisterm,
-        color: thiscolor
-      })
-    }
-    console.log(termarr)
-    // 设置总数
-    let sign = 0;
-    for (var s = 0; s < termarr.length; s++) {
-      sign += termarr[s].data
-    }
-    //设置半径 
-    let radius = 80;
-    for (var i = 0; i < termarr.length; i++) {
-      var start = 0;
-      // 开始绘制
-      ctx.beginPath()
-      if (i > 0) {
-        for (var j = 0; j < i; j++) {
-          start += termarr[j].data / sign * 2 * Math.PI
-        }
+
+    let data = this.data.voteData.voteChose,
+        roundL = 2 * Math.PI,
+        sAngle = 0,
+        eAngle = 0,
+        radius = 80;
+
+    for (let i in data){
+      sAngle = data[i - 1] && data[i - 1].percen/100 || 0;
+      eAngle = data[i].percen/100 + sAngle;
+      if (eAngle == 0){
+        continue
       }
-      var end = start + termarr[i].data / sign * 2 * Math.PI
-      ctx.arc(number.x, number.y, radius, start, end);
+      ctx.beginPath()
+      ctx.arc(radius, radius, radius, roundL * sAngle, roundL * eAngle);
       ctx.setLineWidth(1);
-      ctx.lineTo(number.x, number.y);
-      ctx.setStrokeStyle('#fff');
-      ctx.setFillStyle(termarr[i].color);
+      ctx.lineTo(radius, radius);
+      ctx.setFillStyle(data[i].color);
       ctx.fill();
       ctx.closePath();
-      ctx.stroke();
     }
-    ctx.draw()
+
+    ctx.beginPath()
+    ctx.arc(radius, radius, radius* 0.7, roundL * 0, roundL * 1);
+    ctx.setFillStyle('#fff');
+    ctx.fill();
+    ctx.closePath();
+
+    ctx.draw();
   },
   goVote: function(){
     wx.navigateTo({
