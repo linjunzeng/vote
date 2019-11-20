@@ -1,21 +1,7 @@
 import { getToken } from './util.js'
+import config from './config.js'
 
-// let baseUrl = 'http://localhost:3000';
-let baseUrl = 'https://www.linjunzeng.top';
-
-function postStatus(res, reject, url, data){
-  if (res.statusCode == '401') {
-    wx.setStorageSync('token', '')
-    post(url, data)
-  } else if (res.statusCode == '500'){
-    reject({
-      message: '服务器出错'
-    })
-  } else {
-    return true
-  }
-  return false
-}
+let baseUrl = config.BASE_URL;
 
 async function post(url, data = {}) {
   let header = {};
@@ -28,26 +14,25 @@ async function post(url, data = {}) {
       data: data,
       header: header,
       success(res) {
-        if (!postStatus(res, reject, url, data)){
-          return false
-        }
-        if (res.data.errorCode == '01'){
-          reject(res.data)
-        }else {
-          let token = res.header.token;
-          if (token){
-            res.data.returnObject.token = token;
+        if (res.statusCode == '200') {
+          if (res.data.errorCode == '01') {
+            reject(res.data)
+          } else {
+            if (res.header.token) {
+              res.data.returnObject.token = res.header.token;
+            }
+            resolve(res.data)
           }
-          resolve(res.data)
+        } else if (res.statusCode == '401'){
+          wx.setStorageSync('token', '');
+          // resolve(post(url, data))
+        } else if(res.statusCode == '500'){
+          reject({ message: '服务器出错' })
         }
       },
       fail(err) {
         console.log(err);
-        wx.showToast({
-          title: '接口出错请联系管理员',
-          icon: 'none',
-          duration: 2000
-        })
+        reject({message: '接口出错请联系管理员'})
       }
     })
   })

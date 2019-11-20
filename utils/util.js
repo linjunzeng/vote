@@ -1,17 +1,17 @@
 import { login } from './api.js';
+import config from './config.js'
 
-export function getToken(){
-  return new Promise((resolve, reject) => {
-    wx.checkSession({
+console.log(config)
+export async function getToken(){
+  return config.TOKEN || await wxlogin()
+    /* wx.checkSession({
       success: async res => {
-        let token = wx.getStorageSync('token');
-        resolve(token || await wxlogin())
+        resolve(config.Token || await wxlogin())
       },
       fail: async err => {
-        resolve(await wxlogin())
+        
       }
-    })
-  })
+    }) */
 }
 
 export function wxlogin(){
@@ -23,6 +23,7 @@ export function wxlogin(){
           let token = data.returnObject.token;
 
           wx.setStorageSync('token', token)
+          config.TOKEN = token;
           resolve(token)
         })
         .catch(err => {

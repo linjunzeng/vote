@@ -1,4 +1,5 @@
 import { getUserVote } from '../../utils/api.js'
+let app =getApp();
 Page({
   data: {
     key: 'createVote',
